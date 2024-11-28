@@ -282,7 +282,6 @@ bool VimbaXCameraNode::initialize_parameters()
   auto const settingsFileParamDesc = rcl_interfaces::msg::ParameterDescriptor{}
   .set__description("Settings file to load at startup").set__read_only(true);
   node_->declare_parameter(parameter_settings_file, "", settingsFileParamDesc);
-
   auto const bufferCountRange = rcl_interfaces::msg::IntegerRange{}
   .set__from_value(3).set__step(1).set__to_value(1000);
   auto const bufferCountParamDesc = rcl_interfaces::msg::ParameterDescriptor{}
@@ -1670,6 +1669,7 @@ bool VimbaXCameraNode::is_streaming()
 
 std::string VimbaXCameraNode::get_node_name()
 {
+#if 0
   auto const pidString = [] {
 #ifdef __unix__
       return std::to_string(getpid());
@@ -1677,6 +1677,9 @@ std::string VimbaXCameraNode::get_node_name()
     }();
 
   return "vimbax_camera_" + pidString;
+#else
+  return "vimbax_camera";
+#endif
 }
 
 VimbaXCameraNode::NodeBaseInterface::SharedPtr VimbaXCameraNode::get_node_base_interface() const
